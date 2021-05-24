@@ -9,20 +9,17 @@ def binarySearch(arr, targetNum):
     end = len(arr) - 1
     while (start <= end):
         # 중간 인덱스
-        midIndex = len(arr) // 2  # 5
-
-        # 중간 인덱스 값 저장
-        indexValue = arr[midIndex]
+        midIndex = (start + end) // 2  # midIndex 값 변경
 
         # 중간 인덱스 값이 찾는 대상이면 중간 인덱스 리턴
-        if indexValue == targetNum:
+        if arr[midIndex] == targetNum:
             return midIndex
-        elif indexValue < targetNum:
+        elif arr[midIndex] < targetNum:
             start = midIndex + 1
-        elif indexValue > targetNum:
+        elif arr[midIndex] > targetNum:
             end = midIndex - 1
 
-    print("start :", start, "end :", end)
+        # print("start :", start, "end :", end)
     return -1
 
 
