@@ -1,10 +1,9 @@
 from datetime import date
 from time import ctime
+from datetime import datetime
 
 
 class Greeter:
-    name = ""
-
     def __init__(self, name):
         self.name = name
 
@@ -13,23 +12,23 @@ class Greeter:
         """
         현재 요일 반환
         """
-        weekdays = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
-        today = list(map(int, str(date.today()).split("-")))
-        weekday = weekdays[date(today[0], today[1], today[2]).weekday()]
-        return weekday
+        return datetime.now().strftime("%A")
 
     def _part_of_day(self):
         """
         현재 시각에 해당하는 값을 반환한다.
         """
-        time = ctime().split()[3]
-        hour = int(time.split(":")[0])
-        if hour < 12:
-            return "morning"
-        elif hour < 5:
-            return "afternoon"
+
+        current_hour = datetime.now().hour
+
+        if current_hour < 12:
+            part_of_day = "morning"
+        elif current_hour < 17:
+            part_of_day = "afternoon"
         else:
-            return "evening"
+            part_of_day = "evening"
+
+        return part_of_day
 
     def greet(self, store):
         """
