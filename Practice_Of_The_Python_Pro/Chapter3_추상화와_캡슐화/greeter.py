@@ -7,7 +7,6 @@ class Greeter:
 
     def __init__(self, name):
         self.name = name
-        pass
 
     @staticmethod
     def _day():
