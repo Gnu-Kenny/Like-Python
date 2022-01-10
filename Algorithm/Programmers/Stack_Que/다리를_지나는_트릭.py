@@ -6,29 +6,40 @@ def solution(bridge_length, weight, truck_weights):
     bridge = deque([])
     exit = []
     truck_weights = deque(truck_weights)
+    truck_weights_length = len(truck_weights)
     elapsed_time = 0
-    while len(truck_weights) != 0:
-        # if len(bridge) == 0:
-        #     truck_weight = truck_weights.popleft()
-        # elif weight - reduce(lambda x, y: x + y, bridge) < truck_weights[0]:
-        #     truck_weight = truck_weights.popleft()
+    while len(exit) != truck_weights_length:
 
         # 다리 위의 트럭들의 무게의 합이 weight보다 작을 경우만 append 가능
         current_bridge_weight = (
-            reduce(lambda x, y: x + y, bridge) if len(bridge) != 0 else 0
+            reduce(lambda x, y: x + y, [e[0] for e in bridge])
+            if len(bridge) != 0
+            else 0
         )
-        if weight - current_bridge_weight >= truck_weights[0]:
-            truck_weight = truck_weights.popleft() # 대기 트럭 리스트에서 pop
-            bridge.append([truck_weight,0])  # 다리에 트럭을 둬야함
-        
-        # bridge_length의 크기만큼 다리위에 있었던 트럭은 pop되어 exit 리스트에 append 된다.
-        for truck in range(len(bridge)):
-            if truck[1] == weight:
-                exit.append(truck[1])
-            truck[1] += 1
-        bridge.
-        elapsed_time += 1
+        truck_weight = truck_weights[0] if len(truck_weights) != 0 else weight + 1
+        if (weight - current_bridge_weight) >= truck_weight and len(
+            bridge
+        ) < bridge_length:
+            # truck_weight = truck_weights.popleft()  # 대기 트럭 리스트에서 pop
+            bridge.append([truck_weights.popleft(), 0])  # 다리에 트럭을 둬야함
 
+        # bridge_length의 크기만큼 다리위에 있었던 트럭은 pop되어 exit 리스트에 append 된다.
+        if bridge[0][1] >= bridge_length:
+            exit.append(bridge.popleft())
+            current_bridge_weight = (
+                reduce(lambda x, y: x + y, [e[0] for e in bridge])
+                if len(bridge) != 0
+                else 0
+            )
+            truck_weight = truck_weights[0] if len(truck_weights) != 0 else weight + 1
+            if (weight - current_bridge_weight) >= truck_weight and len(
+                bridge
+            ) < bridge_length:
+                # truck_weight = truck_weights.popleft()  # 대기 트럭 리스트에서 pop
+                bridge.append([truck_weights.popleft(), 0])  # 다리에 트럭을 둬야함
+        for truck in bridge:
+            truck[1] += 1
+        elapsed_time += 1
     return elapsed_time
 
 
@@ -42,7 +53,11 @@ def main():
     weight = 100
     truck_weights = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
     # return 110
-    solution(bridge_length, weight, truck_weights)
+
+    # bridge_length = 5
+    # weight = 5
+    # truck_weights = [2, 2, 2, 2, 1, 1, 1, 1, 1]
+    print(solution(bridge_length, weight, truck_weights))
 
 
 if __name__ == "__main__":
