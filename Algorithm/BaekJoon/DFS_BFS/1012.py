@@ -1,77 +1,71 @@
 from collections import deque
+import sys
+input = sys.stdin.readline
 
 
 class Node:
-    def __init__(self, y, x, level):
+    def __init__(self, y, x):
         self.y, self.x = y, x
-        self.level = level
 
 
-width = 0
-height = 0
-veg_num = 0
+w = 0
+h = 0
+v_num = 0
 ground = []
 visit = []
-min_path = 99999999
-dy = [-1, 1, 0, 0]  # 위, 아래, 좌, 우
-dx = [0, 0, -1, 1]
-answer = 0
 
 
-def bfs():
-    global width, height, veg_num
+def bfs(node: Node):
+    global w, h, v_num
     global ground
     global visit
-    global dy, dx
-    global answer
+
+    dy = [-1, 1, 0, 0]  # 위, 아래, 좌, 우
+    dx = [0, 0, -1, 1]
+
     q = deque()
 
-    q.append(Node(0, 0, 0))
-    while len(q) != 0:
+    q.append(node)
+    while q:
         now = q.popleft()
 
-        # 종료 조건(도착)
-        # if now.y == height - 1 and now.x == width - 1:
-        #     return now.level + 1
+        for i in range(4):
+            ny = now.y + dy[i]
+            nx = now.x + dx[i]
 
-        for idx in range(4):
-            ny = now.y + dy[idx]
-            nx = now.x + dx[idx]
-
-            if ny < 0 or nx < 0 or ny >= height or nx >= width:
+            if ny < 0 or nx < 0 or ny >= h or nx >= w:
                 continue
             if visit[ny][nx]:
                 continue
             if ground[ny][nx] == 0:
                 continue
-            visit[ny][nx] = True
-            q.append(Node(ny, nx, now.level + 1))
-
-    if visit.count(True) == veg_num:
-        answer += 1
-    else:
-        answer += 1
-        bfs()
-
-    return answer
+            visit[ny][nx] = 1
+            q.append(Node(ny, nx))
 
 
 def main():
-    global width, height, veg_num
+    global w, h, v_num
     global ground
     global visit
 
     t = int(input())
 
     for _ in range(t):
-        width, height, veg_num = list(map(int, input().split()))
-        ground = [[0 for _ in range(width)] for _ in range(height)]
-        visit = [[False for _ in range(width)] for _ in range(height)]
-        for _ in range(veg_num):
-            pos = list(map(int, input().split()))  # w, h 순으로 입력
-            ground[pos[1]][pos[0]] = 1
+        answer = 0
+        ground = []
+        visit = []
+        w, h, v_num = list(map(int, input().split()))
+        ground = [[0 for _ in range(w)] for _ in range(h)]
+        visit = [[0 for _ in range(w)] for _ in range(h)]
+        for _ in range(v_num):
+            x, y = list(map(int, input().split()))  # w, h 순으로 입력
+            ground[y][x] = 1
+        for y in range(h):
+            for x in range(w):
+                if visit[y][x] == 0 and ground[y][x] == 1:
+                    answer += 1
+                    bfs(Node(y, x))
 
-        bfs()
         print(answer)
 
 
