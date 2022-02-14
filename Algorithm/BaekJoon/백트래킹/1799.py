@@ -46,7 +46,7 @@ def back(start:int, board: list, points: list, level:int):
         if board[y][x]:
             continue
         put_or_pick_bishop(Node(y,x), board, True)
-        dfs(i+1, board, points, level + 1)
+        back(i+1, board, points, level + 1)
         put_or_pick_bishop(Node(y,x), board, False)
 
 def main():
