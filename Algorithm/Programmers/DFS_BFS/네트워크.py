@@ -3,13 +3,13 @@ input = sys.stdin.readline
 
 visit = []
 alist = []
-def bfs(network:list):
+def dfs(network:list):
     global visit, alist
     for computer in network:
         if visit[computer]:
             continue
         visit[computer] = 1
-        bfs(alist[computer])
+        dfs(alist[computer])
 def solution(n, computers):
     global visit, alist
     visit = [0 for _ in range(n)]
