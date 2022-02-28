@@ -22,7 +22,7 @@ def solution(n, computers):
     for i in range(n):
         if visit[i] == 0:
             answer += 1
-            bfs(alist[i])
+            dfs(alist[i])
     
     return answer
 
