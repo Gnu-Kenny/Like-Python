@@ -5,8 +5,6 @@ input = sys.stdin.readline
 n = 0
 m = 0
 p = 0
-dy = (0,0,-1,1)
-dx = (-1,1,0,0)
 visit = []
 point = 0
 start_to_point = 0
@@ -17,7 +15,7 @@ class Node:
         self.x = x
 
 def dfs_start_to_point(node:Node):
-    global n,m,p, point, start_to_point, point_to_end, dy, dx, visit
+    global n,m,p, point, start_to_point, visit
     dy = (0,1)
     dx = (1,0)
     y, x = node.y, node.x
@@ -31,7 +29,6 @@ def dfs_start_to_point(node:Node):
 
         if ny < 0 or nx < 0 or ny > point.y or nx > point.x:
             continue
-        
             
         if visit[ny][nx]:
             continue
@@ -43,7 +40,7 @@ def dfs_start_to_point(node:Node):
         visit[ny][nx] = 0
 
 def dfs_point_to_end(node:Node):
-    global n,m,p, point, start_to_point, point_to_end, dy, dx, visit
+    global n,m,p, point, point_to_end, visit
     dy = (0,1)
     dx = (1,0)
     y, x = node.y, node.x
