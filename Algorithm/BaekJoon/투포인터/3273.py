@@ -1,3 +1,4 @@
+# https://www.acmicpc.net/problem/3273
 import sys
 input = sys.stdin.readline
 
@@ -15,11 +16,6 @@ def main():
                 answer += 1
             elif s + arr[j] > x:
                 break
-
-    # for i in range(n):
-    #     for j in range(i+1, n):
-    #         if arr[i] + arr[j] == x:
-    #             answer += 1
 
     print(answer)
 
