@@ -19,12 +19,10 @@ def dfs(now: Node):
     global n, m, board, dp, dy, dx
 
     if now.y == n-1 and now.x == m-1:
+        dp[now.y][now.x] = 1
         return 1
-    # 이미 방문했었다면 그 위치에서 출발하는 경우의 수 리턴
-    if dp[now.y][now.x] != -1:
-        return dp[now.y][now.x]
+    dp[now.y][now.x] = 0
 
-    count = 0
     for i in range(4):
         ny = now.y + dy[i]
         nx = now.x + dx[i]
@@ -33,9 +31,10 @@ def dfs(now: Node):
 
         if board[now.y][now.x] <= board[ny][nx]:
             continue
-        count += dfs(Node(ny, nx))
-
-    dp[now.y][now.x] = count
+        if dp[ny][nx] != -1:
+            dp[now.y][now.x] += dp[ny][nx]
+        else:
+            dp[now.y][now.x] += dfs(Node(ny, nx))
 
     return dp[now.y][now.x]
 
