@@ -9,7 +9,7 @@ def main():
 
     left_max_values = [0] * (m+1)
     right_max_values = [0] * (m+2)
-    
+
     for i in range(1, m+1):
         left_max_values[i] = max(left_max_values[i-1], arr[i])
     for i in range(m, -1, -1):
